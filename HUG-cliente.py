@@ -33,9 +33,12 @@ def login():
     leitor = open(f"dados_dos_usuarios\{Nome}.txt", "r")
     for lista in leitor: 
         global valores
-        valores = lista.split()  
-    print("\nOh que ótimo! Vamos prosseguir.\n")
-
+        valores = lista.split() 
+    if valores[0] == Nome and valores[2] == Senha:
+        print("\nOh que ótimo! Vamos prosseguir.\n")
+    else:
+        login()
+    
 
 loginOuCadastro = input("Como primeiro passo, é necessário fazer um cadastro. Mas se já usou o Hug efetue o login.\nPara login digite [1];\nPara cadastro dígite [2]:\n")
 
@@ -49,7 +52,7 @@ else:
     quit()
 
 entrarNoServidor = input("Você quer entrar no servidor?").lower()
-if entrarNoServidor == 'sim':
+if entrarNoServidor == 'sim' or entrarNoServidor == 'Sim' or entrarNoServidor == 's' or entrarNoServidor == 'S' :
     #Parte do cliente usando os modulos socket e threading a conexão entre cliente e servidor é feita via socket.
     apelido = valores[0]
 
@@ -73,7 +76,7 @@ if entrarNoServidor == 'sim':
         while True:
             mensagem = f"{apelido}: {input('')}"
             cliente.send(mensagem.encode('ascii'))
-elif entrarNoServidor == 'não':
+elif entrarNoServidor == 'não' or entrarNoServidor == 'Não' or  entrarNoServidor == 'n' or  entrarNoServidor == 'N':
     quit()
 #Os threads são da biblioteca threading aqui é onde o programa essas funções receber() e escrever() são executadas.
 threadReceber = threading.Thread(target=receber)
