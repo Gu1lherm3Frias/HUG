@@ -1,2 +1,2 @@
 # HUG
-My first programming project. 
+Chat Server and Client writen with python
