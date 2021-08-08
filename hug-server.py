@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
 import socket
 import threading
 
 
 hospedeiro = '127.0.0.1'
-porta = 55555
+porta = 55556
 
 servidor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 servidor.bind((hospedeiro, porta))
@@ -16,7 +17,7 @@ def transmissao(mensagem):
     for cliente in clientes:
         cliente.send(mensagem)
 
-def ligaçao(cliente):
+def ligacao(cliente):
     while True:
         try:
             mensagem = cliente.recv(1024)
@@ -44,7 +45,7 @@ def receber():
         transmissao(f"\n{nome} entrou no chat!\n".encode('ascii'))
         cliente.send('\nConectado ao servidor!\n'.encode('ascii'))
 
-        thread = threading.Thread(target=ligaçao, args=(cliente,))
+        thread = threading.Thread(target=ligacao, args=(cliente,))
         thread.start()
 
 print("servidor está ouvindo...")

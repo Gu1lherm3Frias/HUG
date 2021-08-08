@@ -1,15 +1,18 @@
-#Bibliotecas usadas
+# -*- coding: utf-8 -*-
+#Library used
 import string
 import random
 import socket
 import threading
 
+
+
 print("Seja bem vindo ao HUG!\nAqui você conhece pessoas novas e faz novas amizades :)\n")
 
 def cadastro():
-    nome = input("Insira seu nome:").lower()
-    idade = input("Digite a sua idade: ").lower()
-    senha = input("Insira uma senha: ").lower()
+    name = input("Insira seu nome: ").lower()
+    age = input("Digite a sua idade: ").lower()
+    password = input("Insira uma senha: ").lower()
     #Gerador de Id usando os módulos string e random 
     def Id():
         s=string.ascii_uppercase+string.digits
@@ -26,11 +29,11 @@ def cadastro():
 
 #Essa função serve para confirma se você já temm uma conta ou não 
 def login():
-    global Nome
-    Nome = input("Digite seu nome ou apelido:\n").lower()
-    Senha = input("Digite a senha para efetuar o login:\n").lower()
+    global name
+    name = input("Digite seu nome ou apelido: \n").lower()
+    password = input("Digite a senha para efetuar o login: \n").lower()
 
-    leitor = open(f"dados_dos_usuarios\{Nome}.txt", "r")
+    leitor = open(f"dados_dos_usuarios\{name}.txt", "r")
     for lista in leitor: 
         global valores
         valores = lista.split()  
@@ -54,7 +57,7 @@ if entrarNoServidor == 'sim':
     apelido = valores[0]
 
     cliente = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    cliente.connect(('127.0.0.1', 55555))
+    cliente.connect(('127.0.0.1', 55556))
     #Essa função após conectado o servidor serve como o nome já diz receber e enviar dados de como o servidor está e para manter o servidor atualizado.
     def receber():
         while True:
@@ -65,7 +68,7 @@ if entrarNoServidor == 'sim':
                 else:
                     print(mensagem)
             except:
-                print("Desculpe-nos! Um erro aconteceu!")
+                print("Sorry, a error happned!")
                 cliente.close()
                 break           
                 #função de envio de mensagem, é um while que sempre ativo recebe um input e mostra na tela com a função send().
