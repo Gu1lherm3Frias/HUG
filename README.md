@@ -1,7 +1,7 @@
 # HUG
 Chat Server and Client writen with python
 
-Install Python 3 and MariaDB
+<h1>Install Python 3 and MariaDB</h1>
 
   Windows:
   Soon windows 11 will have winget
@@ -15,11 +15,15 @@ Install Python 3 and MariaDB
   MacOS:
   brew install python3 mariadb && brew services start mariadb && mysql_secure_installation
   
- Import database
+ <h1>Import database</h1>
     
    mysql -u root -p
+   
    create user 'user'@'localhost' indetified by 'password';
+   
    grant all privileges to * . * on 'user'@'localhost';
    flush privileges;
+   
    create database hug;
+   
    mysql -u user -p hug << hugdatabase.sql
