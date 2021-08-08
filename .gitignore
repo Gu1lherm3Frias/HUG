@@ -129,7 +129,7 @@ dmypy.json
 .pyre/
 
 #database connection file
-database-connection.py
+databaseconnection.py
 
 #pycharm default folder
 .idea

@@ -1,52 +1,56 @@
 # -*- coding: utf-8 -*-
 import socket
 import threading
+import mysql.connector
+import databaseconnection
+
+importlib.import_module(database-connection)
 
 
-hospedeiro = '127.0.0.1'
-porta = 55556
+host = '127.0.0.1'
+port = 55564
 
-servidor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-servidor.bind((hospedeiro, porta))
-servidor.listen()
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.bind((host, port))
+server.listen()
 
-clientes = []
-nomes = []
+clients = []
+names = []
 
-def transmissao(mensagem):
-    for cliente in clientes:
-        cliente.send(mensagem)
+def transmission(mensagem):
+    for client in clients:
+        client.send(mensagem)
 
-def ligacao(cliente):
+def connection(client):
     while True:
         try:
-            mensagem = cliente.recv(1024)
-            transmissao(mensagem)
+            message = client.recv(1024)
+            transmission(message)
         except:
-            index = clientes.index(cliente)
-            clientes.remove(cliente)
-            cliente.close()
-            nome = nomes[index]
-            transmissao(f"{nome} saiu do chat!".encode(ascii))
-            nomes.remove(nome)
+            index = clients.index(client)
+            clients.remove(client)
+            client.close()
+            name = names[index]
+            transmission(f"{name} exit of chat!".encode(ascii))
+            names.remove(name)
             break
 
-def receber():
+def receive():
     while True:
-        cliente, endereço = servidor.accept()
-        print(f"\nConectou-se com {str(endereço)}\n")
+        client, address = server.accept()
+        print(f"\nConnected with {str(address)}\n")
 
-        cliente.send('NICK'.encode('ascii'))    
-        nome = cliente.recv(1024).decode('ascii')
-        nomes.append(nome)
-        clientes.append(cliente)
+        client.send('NICK'.encode('ascii'))
+        name = client.recv(1024).decode('ascii')
+        names.append(name)
+        clients.append(client)
 
-        print(f"\nNome do cliente é {nome}\n")
-        transmissao(f"\n{nome} entrou no chat!\n".encode('ascii'))
-        cliente.send('\nConectado ao servidor!\n'.encode('ascii'))
+        print(f"\nClient name is {name}\n")
+        transmission(f"\n{name} joined to the chat !\n".encode('ascii'))
+        client.send('\nConnected to Chat!\n'.encode('ascii'))
 
-        thread = threading.Thread(target=ligacao, args=(cliente,))
+        thread = threading.Thread(target=connection, args=(client,))
         thread.start()
 
-print("servidor está ouvindo...")
-receber()
+print("Server is Online...")
+receive()
